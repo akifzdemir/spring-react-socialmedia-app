@@ -40,5 +40,7 @@ public class User {
     Set<Like> likes;
     @OneToMany(mappedBy = "user")
     Set<UserImage> images;
+    @OneToMany(mappedBy = "user")
+    Set<Comment>comments;
 
 }
