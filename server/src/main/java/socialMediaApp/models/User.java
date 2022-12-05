@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -20,13 +21,21 @@ public class User {
     @Id
     @Column(name = "id")
     private int id;
+
+    @NotNull
     @Column(name = "name")
     private String name;
+
+    @NotNull
     @Column(name = "email")
     @Email
     private String email;
-    @Column(name = "surname")
-    private String surname;
+
+    @NotNull
+    @Column(name = "last_name")
+    private String lastName;
+
+    @NotNull
     @Column(name = "password")
     private String password;
 

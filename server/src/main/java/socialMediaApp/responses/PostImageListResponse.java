@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentResponse {
+public class PostImageListResponse {
     private int id;
     private int postId;
-    private String description;
+    private String imagePath;
 }

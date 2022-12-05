@@ -6,7 +6,7 @@ import socialMediaApp.models.Comment;
 import socialMediaApp.repositories.CommentRepository;
 import socialMediaApp.requests.CommentAddRequest;
 import socialMediaApp.requests.CommentUpdateRequest;
-import socialMediaApp.responses.CommentResponse;
+import socialMediaApp.responses.CommentGetResponse;
 
 import java.util.List;
 
@@ -26,12 +26,12 @@ public class CommentService {
         return "Comment Added";
     }
 
-    public List<CommentResponse> getAll(){
+    public List<CommentGetResponse> getAll(){
         List<Comment> comments = commentRepository.findAll();
         return commentMapper.commentsToResponses(comments);
     }
 
-    public CommentResponse  getById(int id){
+    public CommentGetResponse getById(int id){
         Comment comment = commentRepository.findById(id).orElse(null);
         return  commentMapper.commentToResponse(comment);
     }
