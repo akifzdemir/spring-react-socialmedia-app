@@ -18,6 +18,6 @@ public class UserService {
     }
 
     public List<UserResponse> getAll(){
-        return userMapper.usersToRespnoses(userRepository.findAll());
+        return userMapper.usersToResponses(userRepository.findAll());
     }
 }

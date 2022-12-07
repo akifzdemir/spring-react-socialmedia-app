@@ -8,7 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserFollowerResponse {
-    private int id;
-    private int followerId;
-    private String followerName;
+   private int userId;
 }

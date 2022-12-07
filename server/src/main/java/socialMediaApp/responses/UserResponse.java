@@ -16,7 +16,7 @@ public class UserResponse {
     private String email;
     private List<UserPostResponse> posts;
     private List<UserFollowerResponse> followers;
-    private List<UserFollowedResponse> follows;
+    private List<UserFollowingResponse> following;
     private List<UserLikeResponse> likes;
     private List<UserCommentResponse> comments;
 }

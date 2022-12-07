@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class FollowAddRequest {
-    private int followedId;
-    private int followerId;
+    private int userId;
+    private int followingId;
 }

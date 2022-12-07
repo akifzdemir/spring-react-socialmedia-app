@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class FollowResponse {
     private int id;
     private int followerId;
-    private int followedId;
+    private int followingId;
     private String followerName;
-    private String followedName;
+    private String followingName;
 }

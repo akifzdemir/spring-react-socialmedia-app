@@ -20,10 +20,10 @@ public class Follow {
     private int id;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "follower_id")
-    User follower;
+    @JoinColumn(name = "user_id")
+    User user;
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "followed_id")
-    User followed;
+    @JoinColumn(name = "user_following_id")
+    User following;
 }

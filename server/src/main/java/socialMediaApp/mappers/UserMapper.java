@@ -9,14 +9,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    @Mapping(source = "follower.id",target = "followerId")
-    @Mapping(target = "followerName",expression = "java(follow.getFollower().getName() + \" \"+follow.getFollower().getLastName())")
-    UserFollowerResponse followToUserFollowerResponse(Follow follow);
 
-    @Mapping(source = "follower.id",target = "followedId")
-    @Mapping(target = "followedName",expression = "java(follow.getFollowed().getName() + \" \"+follow.getFollowed().getLastName())")
-    UserFollowedResponse followToUserFollowedResponse(Follow follow);
-
+    @Mapping(source = "user.id",target = "userId")
+    UserFollowerResponse followToFollowerResponse(Follow follow);
+    @Mapping(source = "following.id",target = "userId")
+    UserFollowingResponse followToFollowingResponse(Follow follow);
     @Mapping(source = "post.id",target = "postId")
     UserLikeResponse likeToUserFollowedResponse(Like like);
 
@@ -26,12 +23,13 @@ public interface UserMapper {
     @Mapping(source = "post.id",target = "postId")
     UserCommentResponse commentToResponse(Comment comment);
 
-    @Mapping(source = "follows",target = "follows")
+    //@Mapping(source = "followers",target = "followers")
     @Mapping(source = "followers",target = "followers")
+    @Mapping(source = "following",target = "following")
     @Mapping(source = "likes",target = "likes")
     @Mapping(source = "posts",target = "posts")
     UserResponse userToResponse(User user);
 
-    List<UserResponse> usersToRespnoses(List<User> users);
+    List<UserResponse> usersToResponses(List<User> users);
 
 }

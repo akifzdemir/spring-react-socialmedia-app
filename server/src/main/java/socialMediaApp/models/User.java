@@ -39,9 +39,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "followed")
-    Set<Follow> follows;
-    @OneToMany(mappedBy = "follower")
+    @OneToMany(mappedBy = "user")
+    Set<Follow> following;
+    @OneToMany(mappedBy = "following")
     Set<Follow> followers;
     @OneToMany(mappedBy = "user")
     Set<Post> posts;
