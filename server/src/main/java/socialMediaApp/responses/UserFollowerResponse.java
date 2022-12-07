@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentGetResponse {
+public class UserFollowerResponse {
     private int id;
-    private int postId;
-    private int userId;
-    private String description;
+    private int followerId;
+    private String followerName;
 }

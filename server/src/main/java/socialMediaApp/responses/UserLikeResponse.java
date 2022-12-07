@@ -5,11 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class CommentGetResponse {
+@AllArgsConstructor
+public class UserLikeResponse {
     private int id;
     private int postId;
-    private int userId;
-    private String description;
 }

@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentGetResponse {
-    private int id;
+public class UserPostResponse {
     private int postId;
-    private int userId;
-    private String description;
 }
