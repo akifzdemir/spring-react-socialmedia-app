@@ -16,8 +16,7 @@ public class FollowService {
         this.followMapper = followMapper;
     }
 
-    public String add(FollowAddRequest followAddRequest){
+    public void add(FollowAddRequest followAddRequest){
         followRepository.save(followMapper.addRequestToFollow(followAddRequest));
-        return "Added";
     }
 }

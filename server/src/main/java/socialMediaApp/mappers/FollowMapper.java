@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import socialMediaApp.models.Follow;
 import socialMediaApp.requests.FollowAddRequest;
-import socialMediaApp.responses.FollowResponse;
+import socialMediaApp.responses.follow.FollowResponse;
 
 import java.util.List;
 

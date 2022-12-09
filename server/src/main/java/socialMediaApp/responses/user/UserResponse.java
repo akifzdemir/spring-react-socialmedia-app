@@ -1,8 +1,9 @@
-package socialMediaApp.responses;
+package socialMediaApp.responses.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import socialMediaApp.responses.user.*;
 
 import java.util.List;
 

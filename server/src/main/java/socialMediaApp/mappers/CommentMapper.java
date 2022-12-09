@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import socialMediaApp.models.Comment;
 import socialMediaApp.requests.CommentAddRequest;
-import socialMediaApp.responses.CommentGetResponse;
+import socialMediaApp.responses.comment.CommentGetResponse;
 
 import java.util.List;
 

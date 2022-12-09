@@ -1,4 +1,4 @@
-package socialMediaApp.responses;
+package socialMediaApp.responses.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

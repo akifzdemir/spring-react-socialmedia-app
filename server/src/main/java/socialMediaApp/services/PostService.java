@@ -5,7 +5,7 @@ import socialMediaApp.mappers.PostMapper;
 import socialMediaApp.models.Post;
 import socialMediaApp.repositories.PostRepository;
 import socialMediaApp.requests.PostAddRequest;
-import socialMediaApp.responses.PostGetResponse;
+import socialMediaApp.responses.post.PostGetResponse;
 
 import java.util.List;
 
@@ -30,17 +30,16 @@ public class PostService {
         return postMapper.postToGetResponse(post);
     }
 
-    public String add(PostAddRequest postAddRequest){
-        postRepository.save(postMapper.postAddRequestToPost(postAddRequest));
-        return  "Post Added";
+    public List<PostGetResponse> getAllByUser(int userId){
+        List<Post> userPosts = postRepository.findAllByUser_Id(userId);
+        return postMapper.postsToGetResponses(userPosts);
     }
 
-    public String delete(int id){
-        Post postToDelete = postRepository.findById(id).orElse(null);
-        if (postToDelete != null) {
-            postRepository.delete(postToDelete);
-            return "Post deleted";
-        }
-        return  "Post not found";
+    public void add(PostAddRequest postAddRequest){
+        postRepository.save(postMapper.postAddRequestToPost(postAddRequest));
+    }
+
+    public void delete(int id){
+        postRepository.deleteById(id);
     }
 }

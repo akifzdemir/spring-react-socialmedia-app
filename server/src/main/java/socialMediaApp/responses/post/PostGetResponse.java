@@ -1,8 +1,9 @@
-package socialMediaApp.responses;
+package socialMediaApp.responses.post;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 @Data
@@ -15,4 +16,5 @@ public class PostGetResponse {
     private String userLastName;
     private String Description;
     private List<PostImageListResponse> postImages;
+    private List<PostLikeResponse> likes;
 }

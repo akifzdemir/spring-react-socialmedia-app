@@ -1,4 +1,4 @@
-package socialMediaApp.responses;
+package socialMediaApp.responses.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,5 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserFollowingResponse {
-    int userId;
+    private int userId;
+    private String name;
+    private String lastName;
 }

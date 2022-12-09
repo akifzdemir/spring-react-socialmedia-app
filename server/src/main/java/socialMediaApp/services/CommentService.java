@@ -6,7 +6,7 @@ import socialMediaApp.models.Comment;
 import socialMediaApp.repositories.CommentRepository;
 import socialMediaApp.requests.CommentAddRequest;
 import socialMediaApp.requests.CommentUpdateRequest;
-import socialMediaApp.responses.CommentGetResponse;
+import socialMediaApp.responses.comment.CommentGetResponse;
 
 import java.util.List;
 
@@ -20,10 +20,9 @@ public class CommentService {
         this.commentMapper = commentMapper;
     }
 
-    public String add(CommentAddRequest commentAddRequest){
+    public void add(CommentAddRequest commentAddRequest){
         Comment comment = commentMapper.addRequestToComment(commentAddRequest);
         commentRepository.save(comment);
-        return "Comment Added";
     }
 
     public List<CommentGetResponse> getAll(){
@@ -36,17 +35,18 @@ public class CommentService {
         return  commentMapper.commentToResponse(comment);
     }
 
-    public String update(int id, CommentUpdateRequest commentUpdateRequest){
+    public List<CommentGetResponse> getAllByPost(int postId){
+        List<Comment> comments = commentRepository.findAllByPost_Id(postId);
+        return commentMapper.commentsToResponses(comments);
+    }
+    public void update(int id, CommentUpdateRequest commentUpdateRequest){
         Comment commentToUpdate = commentRepository.findById(id).orElse(null);
         if (commentToUpdate!=null){
             commentToUpdate.setDescription(commentUpdateRequest.getDescription());
-            return "Comment Updated";
         }
-        return "Comment not found";
     }
 
-    public String delete(int id){
+    public void delete(int id){
         commentRepository.deleteById(id);
-        return "Comment Deleted";
     }
 }

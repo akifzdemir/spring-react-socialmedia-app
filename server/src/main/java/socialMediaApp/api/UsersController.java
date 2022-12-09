@@ -1,9 +1,10 @@
 package socialMediaApp.api;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import socialMediaApp.responses.UserResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import socialMediaApp.requests.UserAddRequest;
+import socialMediaApp.responses.user.UserResponse;
 import socialMediaApp.services.UserService;
 
 import java.util.List;
@@ -18,7 +19,24 @@ public class UsersController {
     }
 
     @GetMapping("/getall")
-    public List<UserResponse> getAll(){
-       return userService.getAll();
+    public ResponseEntity<List<UserResponse>> getAll(){
+        return new ResponseEntity<>(userService.getAll(),HttpStatus.OK);
+    }
+
+    @GetMapping("/getbyid")
+    public ResponseEntity<UserResponse> getById(int id){
+        return new ResponseEntity<>(userService.getById(id),HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> add(@RequestBody UserAddRequest userAddRequest){
+        userService.add(userAddRequest);
+        return new ResponseEntity<>("User Added",HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> delete(@RequestParam int id){
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

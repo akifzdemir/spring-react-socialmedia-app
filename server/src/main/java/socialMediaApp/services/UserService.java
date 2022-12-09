@@ -2,8 +2,10 @@ package socialMediaApp.services;
 
 import org.springframework.stereotype.Service;
 import socialMediaApp.mappers.UserMapper;
+import socialMediaApp.models.User;
 import socialMediaApp.repositories.UserRepository;
-import socialMediaApp.responses.UserResponse;
+import socialMediaApp.requests.UserAddRequest;
+import socialMediaApp.responses.user.UserResponse;
 
 import java.util.List;
 
@@ -18,6 +20,19 @@ public class UserService {
     }
 
     public List<UserResponse> getAll(){
+
         return userMapper.usersToResponses(userRepository.findAll());
+    }
+    public UserResponse getById(int id){
+        User user = userRepository.findById(id).orElse(null);
+        return userMapper.userToResponse(user);
+    }
+    public void add(UserAddRequest userAddRequest){
+        User user = userMapper.requestToUser(userAddRequest);
+        userRepository.save(user);
+    }
+
+    public void delete(int id){
+        userRepository.deleteById(id);
     }
 }
