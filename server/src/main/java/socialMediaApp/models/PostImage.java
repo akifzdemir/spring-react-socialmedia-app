@@ -19,9 +19,14 @@ public class PostImage {
     @Column(name = "id")
     private int id;
 
-    @NotNull
-    @Column(name = "image_path")
-    private String imagePath;
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "data",length = 1000)
+    private byte[] data;
     @NotNull
     @ManyToOne
     @JoinColumn(name = "post_id")
