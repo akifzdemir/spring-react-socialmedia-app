@@ -5,7 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 import socialMediaApp.mappers.PostImageMapper;
 import socialMediaApp.models.PostImage;
 import socialMediaApp.repositories.PostImageRepository;
-import socialMediaApp.repositories.PostRepository;
 import socialMediaApp.responses.postImage.PostImageResponse;
 import socialMediaApp.utils.ImageUtil;
 
@@ -16,12 +15,12 @@ import java.util.Optional;
 public class PostImageService {
 
     private final PostImageRepository postImageRepository;
-    private final PostRepository postRepository;
+    private final PostService postService;
     private final PostImageMapper postImageMapper;
 
-    public PostImageService(PostImageRepository postImageRepository, PostRepository postRepository, PostImageMapper postImageMapper) {
+    public PostImageService(PostImageRepository postImageRepository, PostService postService, PostImageMapper postImageMapper) {
         this.postImageRepository = postImageRepository;
-        this.postRepository = postRepository;
+        this.postService = postService;
         this.postImageMapper = postImageMapper;
     }
 
@@ -30,7 +29,7 @@ public class PostImageService {
         postImage.setName(file.getOriginalFilename());
         postImage.setType(file.getContentType());
         postImage.setData(ImageUtil.compressImage(file.getBytes()));
-        postImage.setPost(postRepository.findById(postId).get());
+        postImage.setPost(postService.getById(postId));
         postImageRepository.save(postImage);
         return postImageMapper.imageToResponse(postImage);
     }

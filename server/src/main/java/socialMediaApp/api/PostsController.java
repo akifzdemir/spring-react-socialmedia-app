@@ -25,7 +25,7 @@ public class PostsController {
 
     @GetMapping("/getbyid/{id}")
     public ResponseEntity<PostGetResponse> getById(@PathVariable int id){
-        return new ResponseEntity<>(postService.getById(id),HttpStatus.OK);
+        return new ResponseEntity<>(postService.getResponseById(id),HttpStatus.OK);
     }
 
     @GetMapping("/getallbyuser/{userId}")

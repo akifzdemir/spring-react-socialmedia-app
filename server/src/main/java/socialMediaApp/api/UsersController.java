@@ -25,7 +25,7 @@ public class UsersController {
 
     @GetMapping("/getbyid")
     public ResponseEntity<UserResponse> getById(int id){
-        return new ResponseEntity<>(userService.getById(id),HttpStatus.OK);
+        return new ResponseEntity<>(userService.getResponseById(id),HttpStatus.OK);
     }
 
     @PostMapping("/add")

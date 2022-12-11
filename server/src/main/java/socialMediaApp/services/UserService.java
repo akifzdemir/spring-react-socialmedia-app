@@ -23,9 +23,12 @@ public class UserService {
 
         return userMapper.usersToResponses(userRepository.findAll());
     }
-    public UserResponse getById(int id){
+    public UserResponse getResponseById(int id){
         User user = userRepository.findById(id).orElse(null);
         return userMapper.userToResponse(user);
+    }
+    public User getById(int id){
+        return userRepository.findById(id).get();
     }
     public void add(UserAddRequest userAddRequest){
         User user = userMapper.requestToUser(userAddRequest);

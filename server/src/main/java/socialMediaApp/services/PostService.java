@@ -25,9 +25,13 @@ public class PostService {
        return  postMapper.postsToGetResponses(posts);
     }
 
-    public PostGetResponse getById(int id){
+    public PostGetResponse getResponseById(int id){
         Post post = postRepository.findById(id).orElse(null);
         return postMapper.postToGetResponse(post);
+    }
+
+    public Post getById(int id){
+        return postRepository.findById(id).get();
     }
 
     public List<PostGetResponse> getAllByUser(int userId){
