@@ -5,4 +5,5 @@ import socialMediaApp.models.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     void deleteById(int id);
+    User findByEmail(String email);
 }
