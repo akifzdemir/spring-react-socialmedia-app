@@ -1,11 +1,15 @@
-import { Box, Button, Center, Container, Flex, FormControl, FormLabel, Heading, Image, Input, Stack, Text, useBreakpointValue, VStack } from '@chakra-ui/react'
+import { Button, Container, Flex, FormControl, FormLabel, Heading, Image, Input, Stack, Text, useBreakpointValue, useToast, VStack } from '@chakra-ui/react'
 import { useFormik } from 'formik'
-import React from 'react'
+import React, { useContext } from 'react'
+import AuthContext from '../context/AuthContext'
 import AuthService from '../services/AuthService'
 import svg from '../svgs/main.svg'
+
 function Register() {
 
   const authService = new AuthService();
+  const toast = useToast()
+  const {login} = useContext(AuthContext)
 
   const formik = useFormik({
     initialValues: {
@@ -17,16 +21,28 @@ function Register() {
     onSubmit: async (values) => {
       try {
         const result = await authService.register(values)
-        console.log(result.data)
+        login(result.data)
+        toast({
+          title:"Register Succesfully",
+          description: "We've created your account for you.",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        })
       } catch (error) {
         console.log(error.response.data)
+        toast({
+          title:error.response.data,
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
       }
     }
   })
 
 
   return (
-
     <Stack direction={'row'} spacing={0} minH={'100vh'}>
       <Flex alignItems={'center'} justifyContent={'center'} width={{ base: 0, md: '100%', lg: '100%' }}>
         <VStack p={10} spacing={5}>

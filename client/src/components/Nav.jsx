@@ -1,59 +1,39 @@
 import {
   Box,
-  Flex,
-  Button,
   useColorModeValue,
   Stack,
-  useColorMode,
-  Tooltip,
+  Button,
 } from '@chakra-ui/react';
+import { useContext } from 'react';
 import { BiHome } from 'react-icons/bi'
+import AuthContext from '../context/AuthContext';
+import NavItem from './NavItem';
 
 function Nav() {
-  return (
-  <Box top={3} zIndex={1} position={'fixed'} width={'100%'} px={5}>
-        <Flex
-          bg={'white'}
-          color={useColorModeValue('gray.600', 'white')}
-          minH={'70px'}
-          borderRadius={"2xl"}
-          alignItems={'center'}
-          justifyContent={'space-evenly'}
-          boxShadow={'2xl'}
-        >
-          <Tooltip label={'Home'} hasArrow fontSize={'xl'} borderRadius={'2xl'}>
-            <Button
-              p={7}
-              borderRadius={'2xl'}
-              colorScheme={'whiteAlpha'}
-              color={'black'}
-              _hover={{ bg: 'purple.500', color: 'white' }}
-              _active={{ bg: 'purple.600', color: 'white' }}
-            >
-              <BiHome fontSize={42} />
-            </Button>
-          </Tooltip>
-          <Button
-            fontSize={'sm'}
-            fontWeight={400}
-          >
-            Sign In
-          </Button>
-          <Button
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'}
-            bg={'purple.500'}
-            _hover={{
-              bg: 'purple.400',
-            }}
 
-            to={'/register'}
-          >
-            Sign Up
-          </Button>
-        </Flex>
-      </Box>
+  const {logout} = useContext(AuthContext)
+
+  return (
+    <Box top={{lg:4}} zIndex={1} w={{ sm: "100%", lg: '30vh' }} position={{ sm:'sticky', lg: 'fixed' }} px={5}>
+      <Stack
+        bg={'white'}
+        color={useColorModeValue('gray.600', 'white')}
+        borderRadius={"2xl"}
+        spacing={'10'}
+        p={'15px'}
+        pt={{lg:'10vh'}}
+        h={{ sm: '20', lg: '95vh' }}
+        direction={{ sm: 'row', lg: 'column' }}
+        boxShadow={'2xl'}
+      >
+        <NavItem description={'Home'} icon={<BiHome/>}/>
+        <NavItem description={'Home'} icon={<BiHome/>}/>
+        <NavItem description={'Home'} icon={<BiHome/>}/>
+        <Button colorScheme={'facebook'} onClick={()=>logout()}>
+          Log out
+        </Button>
+      </Stack>
+    </Box>
   )
 }
 

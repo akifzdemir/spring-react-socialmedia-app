@@ -57,7 +57,10 @@ public class AuthController {
        user.setLastName(registerRequest.getLastName());
        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
        userRepository.save(user);
-       return ResponseEntity.ok("User Created");
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(registerRequest.getEmail(), registerRequest.getPassword())
+        );
+        return new ResponseEntity<>(jwtUtil.generateToken(registerRequest.getEmail()),HttpStatus.OK);
     }
 
 }

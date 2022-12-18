@@ -12,6 +12,7 @@
     "axios": "^1.2.1",
     "formik": "^2.2.9",
     "framer-motion": "^7.10.0",
+    "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
