@@ -27,6 +27,11 @@ public class UserService {
         User user = userRepository.findById(id).orElse(null);
         return userMapper.userToResponse(user);
     }
+
+    public UserResponse getByEmail(String email){
+        User user = userRepository.findByEmail(email);
+        return userMapper.userToResponse(user);
+    }
     public User getById(int id){
         return userRepository.findById(id).get();
     }

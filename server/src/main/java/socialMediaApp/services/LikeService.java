@@ -21,4 +21,8 @@ public class LikeService {
         Like like = likeMapper.requestToLike(likeAddRequest);
         likeRepository.save(like);
     }
+
+    public void delete(int id){
+        likeRepository.deleteLikeById(id);
+    }
 }

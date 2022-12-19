@@ -23,8 +23,8 @@ public class UsersController {
         return new ResponseEntity<>(userService.getAll(),HttpStatus.OK);
     }
 
-    @GetMapping("/getbyid")
-    public ResponseEntity<UserResponse> getById(int id){
+    @GetMapping("/getbyid/{id}")
+    public ResponseEntity<UserResponse> getById(@PathVariable int id){
         return new ResponseEntity<>(userService.getResponseById(id),HttpStatus.OK);
     }
 

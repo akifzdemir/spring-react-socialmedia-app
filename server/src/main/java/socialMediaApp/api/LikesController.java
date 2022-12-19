@@ -2,10 +2,7 @@ package socialMediaApp.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import socialMediaApp.requests.LikeAddRequest;
 import socialMediaApp.services.LikeService;
 
@@ -23,5 +20,11 @@ public class LikesController {
     public ResponseEntity<String> add(@RequestBody LikeAddRequest likeAddRequest){
         likeService.add(likeAddRequest);
         return new ResponseEntity<>("Added", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> delete(@RequestParam int id){
+        likeService.delete(id);
+        return new ResponseEntity<>("Deleted",HttpStatus.OK);
     }
 }

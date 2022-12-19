@@ -39,7 +39,11 @@ public class AuthController {
               authenticationManager.authenticate(
                       new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
               );
-              return new ResponseEntity<>(jwtUtil.generateToken(loginRequest.getEmail()),HttpStatus.OK);
+              return new ResponseEntity<>(jwtUtil.generateToken(
+                      loginRequest.getEmail(),
+                      userRepository.findByEmail(loginRequest.getEmail()).getId())
+                      ,HttpStatus.OK
+              );
           }catch (Exception e){
               return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
           }
@@ -60,7 +64,9 @@ public class AuthController {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(registerRequest.getEmail(), registerRequest.getPassword())
         );
-        return new ResponseEntity<>(jwtUtil.generateToken(registerRequest.getEmail()),HttpStatus.OK);
+        return new ResponseEntity<>(jwtUtil.generateToken(registerRequest.getEmail(),
+                userRepository.findByEmail(registerRequest.getEmail()).getId())
+                ,HttpStatus.OK);
     }
 
 }

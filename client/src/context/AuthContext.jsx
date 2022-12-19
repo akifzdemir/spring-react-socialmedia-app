@@ -1,14 +1,16 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import UserService from "../services/UserService";
 
 const AuthContext = createContext()
 
 export const AuthProvider =({children})=>{
 
     const [auth,setAuth] = useState(false)
-    const [user,setUser] = useState({email:""})
+    const [user,setUser] = useState({})
     const navigate = useNavigate()
+    const userService = new UserService()
 
     const login = (token)=>{
         if (token) {
@@ -19,23 +21,20 @@ export const AuthProvider =({children})=>{
     }
 
     const isLogged= async()=>{
-        const token = localStorage.getItem("token")
+        const token = localStorage.getItem("token")    
         try {
             if (token) {
                 const decode = await jwtDecode(token)
-                setUser(
-                {
-                   email:decode.sub
-                })
+                const user = await userService.getById(decode.userId,token)
+                 setUser(user.data)
                  setAuth(true)
             }else{
                 setAuth(false)
-                setUser({email:""})
+                setUser({})
             }
         } catch (error) {          
             setAuth(false)
-            localStorage.removeItem("token")
-            setUser({email:""})
+            setUser({})
         }
     }
 
@@ -61,6 +60,7 @@ export const AuthProvider =({children})=>{
 
     useEffect(()=>{
         isLogged()
+        console.log(auth)
         checkTokenExprired()
     },[auth])
 
@@ -68,7 +68,8 @@ export const AuthProvider =({children})=>{
         auth,
         setAuth,
         login,
-        logout
+        logout,
+        user
     }
 
     return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>

@@ -24,6 +24,7 @@ public interface PostMapper {
     @Mapping(source = "likes",target = "likes")
     PostGetResponse postToGetResponse(Post post);
 
+    @Mapping(source = "userId",target = "user.id")
     Post postAddRequestToPost(PostAddRequest postAddRequest);
     List<PostGetResponse> postsToGetResponses(List<Post> posts);
 }
