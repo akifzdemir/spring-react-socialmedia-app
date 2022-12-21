@@ -2,9 +2,10 @@ import { Button } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { AuthProvider } from './context/AuthContext';
-import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login'
+import Profile from './pages/Profile';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -12,8 +13,9 @@ function App() {
    <AuthProvider>
     <Routes>
       <Route path='/' element={<Register/>}/>
-      <Route path='/home' element={<Home/>} />
+      <Route path='/profile' element={<Profile/>} />
       <Route path='/login' element={<Login/>}/>
+      <Route path='/home' element={<Home/>} />
     </Routes>
     </AuthProvider>
     </>

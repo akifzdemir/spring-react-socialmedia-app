@@ -33,6 +33,11 @@ public class PostsController {
         return new ResponseEntity<>(postService.getAllByUser(userId),HttpStatus.OK);
     }
 
+    @GetMapping("/getbyuserfollowing/{userId}")
+    public ResponseEntity<List<PostGetResponse>> getAllByUserFollowing(@PathVariable int userId){
+        return new ResponseEntity<>(postService.getByUserFollowing(userId),HttpStatus.OK);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<String> add(@RequestBody PostAddRequest postAddRequest){
         postService.add(postAddRequest);

@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class PostImageListResponse {
     private int id;
     private int postId;
-    private String imagePath;
+    private byte[] data;
 }

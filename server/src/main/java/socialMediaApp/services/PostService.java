@@ -6,18 +6,24 @@ import socialMediaApp.models.Post;
 import socialMediaApp.repositories.PostRepository;
 import socialMediaApp.requests.PostAddRequest;
 import socialMediaApp.responses.post.PostGetResponse;
+import socialMediaApp.responses.user.UserFollowingResponse;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PostService {
 
     private final PostRepository postRepository;
     private final PostMapper postMapper;
+    private final UserService userService;
 
-    public PostService(PostRepository postRepository, PostMapper postMapper) {
+    public PostService(PostRepository postRepository, PostMapper postMapper, UserService userService) {
         this.postRepository = postRepository;
         this.postMapper = postMapper;
+        this.userService = userService;
     }
 
     public List<PostGetResponse> getAll(){
@@ -37,6 +43,17 @@ public class PostService {
     public List<PostGetResponse> getAllByUser(int userId){
         List<Post> userPosts = postRepository.findAllByUser_Id(userId);
         return postMapper.postsToGetResponses(userPosts);
+    }
+
+    public List<PostGetResponse> getByUserFollowing(int userId){
+        List<UserFollowingResponse> follows = userService.getUserFollowing(userId);
+        Set<Post> set = new HashSet<>();
+
+        for(UserFollowingResponse user : follows){
+           set.addAll(postRepository.findAllByUser_Id(user.getUserId()));
+        }
+
+        return postMapper.postsToGetResponses(new ArrayList<>(set));
     }
 
     public void add(PostAddRequest postAddRequest){

@@ -15,6 +15,5 @@ public class PostGetResponse {
     private String userName;
     private String userLastName;
     private String Description;
-    private List<PostImageListResponse> postImages;
     private List<PostLikeResponse> likes;
 }

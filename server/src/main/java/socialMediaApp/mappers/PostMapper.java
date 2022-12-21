@@ -17,7 +17,6 @@ public interface PostMapper {
     @Mapping(source = "user.name",target = "name")
     @Mapping(source = "user.lastName",target = "lastName")
     PostLikeResponse likeToPostLikeResponse(Like like);
-    @Mapping(source = "postImages",target = "postImages")
     @Mapping(source = "user.id",target = "userId")
     @Mapping(source = "user.lastName",target = "userLastName")
     @Mapping(source = "user.name",target = "userName")

@@ -39,4 +39,5 @@ public interface UserMapper {
 
     List<UserResponse> usersToResponses(List<User> users);
 
+    List<UserFollowingResponse> followsToFollowingResponses(List<Follow> follows);
 }

@@ -8,8 +8,6 @@ export default class LikeService{
             }
         })
     }
-
-
     delete(id,token){
         return axios.delete(process.env.REACT_APP_API+"likes/delete?id="+id,{
             headers:{
