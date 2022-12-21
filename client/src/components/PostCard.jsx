@@ -2,16 +2,16 @@ import { Flex, Card, CardHeader, CardBody, CardFooter, Button, Avatar, Box, Head
 import { BiLike, BiChat, BiShare } from 'react-icons/bi'
 
 function PostCard({ firstName, lastName, userImage, description, postImage }) {
-   
+
     return (
         <Card maxW='lg'>
             <CardHeader>
                 <Flex spacing='4'>
                     <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                        <Avatar name={firstName  +" "+ lastName} src={userImage} />
+                        <Avatar name={firstName + " " + lastName} src={userImage} />
 
                         <Box>
-                            <Heading size='sm'>{firstName +" "+ lastName}</Heading>
+                            <Heading size='sm'>{firstName + " " + lastName}</Heading>
 
                         </Box>
                     </Flex>
@@ -22,13 +22,15 @@ function PostCard({ firstName, lastName, userImage, description, postImage }) {
                     {description}
                 </Text>
             </CardBody>
-            <Image
-                maxW={'md'}
-                maxH={'sm'}
-                objectFit='contain'
-                src={postImage}
-                
-            />
+            {
+                postImage && <Image
+                    maxW={'md'}
+                    maxH={'sm'}
+                    objectFit='contain'
+                    src={postImage}
+
+                /> 
+           }
 
             <CardFooter
                 justify='space-between'

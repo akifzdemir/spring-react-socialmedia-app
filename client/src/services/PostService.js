@@ -17,6 +17,14 @@ export default class PostService{
         })
     }
 
+    getAllByUserFollowing(userId,token){
+        return axios.get(process.env.REACT_APP_API+"posts/getbyuserfollowing/"+userId,{
+            headers:{
+                'Authorization':"Bearer "+token
+            }
+        })
+    }
+
     getById(id,token){
         return axios.get(process.env.REACT_APP_API+"posts/getbyid/"+id,{
             headers:{
