@@ -1,9 +1,7 @@
 import { Center, Heading, VStack } from '@chakra-ui/react'
 import { useEffect, useState, useContext, useMemo } from 'react'
 import Nav from '../components/Nav'
-
 import PostCard from '../components/PostCard'
-import ProfileCard from '../components/ProfileCard'
 import AuthContext from '../context/AuthContext'
 import PostService from '../services/PostService'
 
@@ -29,7 +27,7 @@ function Profile() {
 
 
 
-    useMemo(() => {
+    useEffect(() => {
         getUserPosts()
     }, [user])
 
@@ -43,7 +41,7 @@ function Profile() {
                     {
                         posts.map(post => (
                             <PostCard
-                                key={user.id}
+                                key={post.id}
                                 description={post.description}
                                 firstName={user.name}
                                 lastName={user.lastName}

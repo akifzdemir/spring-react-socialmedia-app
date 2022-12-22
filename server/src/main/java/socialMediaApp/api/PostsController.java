@@ -39,9 +39,9 @@ public class PostsController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> add(@RequestBody PostAddRequest postAddRequest){
-        postService.add(postAddRequest);
-        return new ResponseEntity<>("Post Added",HttpStatus.CREATED);
+    public ResponseEntity<Integer> add(@RequestBody PostAddRequest postAddRequest){
+        int postId = postService.add(postAddRequest);
+        return new ResponseEntity<>(postId,HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete")

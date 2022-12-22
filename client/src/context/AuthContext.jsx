@@ -8,7 +8,7 @@ const AuthContext = createContext()
 export const AuthProvider =({children})=>{
 
     const [auth,setAuth] = useState(false)
-    const [user,setUser] = useState({})
+    const [user,setUser] = useState({name:"",lastName:"",email:""})
     const navigate = useNavigate()
     const userService = new UserService()
 

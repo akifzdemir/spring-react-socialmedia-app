@@ -7,6 +7,7 @@ import {
 import { useContext } from 'react';
 import { BiHome } from 'react-icons/bi'
 import AuthContext from '../context/AuthContext';
+import AddPost from '../pages/AddPost';
 import NavItem from './NavItem';
 
 function Nav() {
@@ -28,6 +29,7 @@ function Nav() {
       >
         <NavItem description={'Home'} icon={<BiHome/>} path={"/home"}/>
         <NavItem description={'Profile'} icon={<BiHome/>} path={"/profile"}/>
+        <AddPost/>
 
       
       </Stack>
