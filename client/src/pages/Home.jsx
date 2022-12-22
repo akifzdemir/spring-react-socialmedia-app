@@ -43,7 +43,7 @@ function Home() {
                                 description={post.description}
                                 firstName={post.userName}
                                 lastName={post.userLastName}
-                                postImage={imageUrl + post.id && null}
+                                postImage={imageUrl + post.id}
                             // userImage={user.userImages[0]}
 
                             />

@@ -1,5 +1,5 @@
 import { Center, Heading, VStack } from '@chakra-ui/react'
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useMemo } from 'react'
 import Nav from '../components/Nav'
 
 import PostCard from '../components/PostCard'
@@ -29,7 +29,7 @@ function Profile() {
 
 
 
-    useEffect(() => {
+    useMemo(() => {
         getUserPosts()
     }, [user])
 
@@ -40,7 +40,6 @@ function Profile() {
             <Center>
             
                 <VStack marginTop={'50px'} spacing={5}>
-                <Heading>Your Posts:</Heading>
                     {
                         posts.map(post => (
                             <PostCard

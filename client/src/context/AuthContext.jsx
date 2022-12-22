@@ -60,7 +60,6 @@ export const AuthProvider =({children})=>{
 
     useEffect(()=>{
         isLogged()
-        console.log(auth)
         checkTokenExprired()
     },[auth])
 

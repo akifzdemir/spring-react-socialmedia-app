@@ -29,6 +29,11 @@ public class CommentsController {
         return new ResponseEntity<>(commentService.getAllByPost(postId),HttpStatus.OK);
     }
 
+    @GetMapping("/getallbyuser/{userId}")
+    public ResponseEntity<List<CommentGetResponse>> getAllByUser(@PathVariable int userId){
+        return new ResponseEntity<>(commentService.getAllByUser(userId),HttpStatus.OK);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<String> add(@RequestBody CommentAddRequest commentAddRequest){
         commentService.add(commentAddRequest);

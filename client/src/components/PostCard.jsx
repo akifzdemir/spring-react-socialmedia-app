@@ -23,14 +23,15 @@ function PostCard({ firstName, lastName, userImage, description, postImage }) {
                 </Text>
             </CardBody>
             {
-                postImage && <Image
+               <Image
                     maxW={'md'}
                     maxH={'sm'}
                     objectFit='contain'
                     src={postImage}
+                    fallback={null}
 
-                /> 
-           }
+                />
+            }
 
             <CardFooter
                 justify='space-between'

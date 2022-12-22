@@ -36,6 +36,9 @@ public class PostImageService {
 
     public byte[] download(int id){
         Optional<PostImage> postImage = postImageRepository.findPostImageByPost_Id(id);
-        return ImageUtil.decompressImage(postImage.get().getData());
+        if (postImage.isPresent()){
+            return ImageUtil.decompressImage(postImage.get().getData());
+        }
+        return null;
     }
 }

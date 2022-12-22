@@ -39,6 +39,11 @@ public class CommentService {
         List<Comment> comments = commentRepository.findAllByPost_Id(postId);
         return commentMapper.commentsToResponses(comments);
     }
+
+    public List<CommentGetResponse> getAllByUser(int userId){
+        List<Comment> comments = commentRepository.findAllByUser_Id(userId);
+        return commentMapper.commentsToResponses(comments);
+    }
     public void update(int id, CommentUpdateRequest commentUpdateRequest){
         Comment commentToUpdate = commentRepository.findById(id).orElse(null);
         if (commentToUpdate!=null){
