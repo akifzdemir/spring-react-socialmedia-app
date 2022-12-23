@@ -1,7 +1,8 @@
 import { Flex, Card, CardHeader, CardBody, CardFooter, Button, Avatar, Box, Heading, Text, Image } from '@chakra-ui/react'
 import { BiLike, BiChat, BiShare } from 'react-icons/bi'
+import CommentModal from './CommentModal'
 
-function PostCard({ userName,userImage, description, postImage }) {
+function PostCard({ userName,userImage, description, postImage,postId }) {
 
     return (
         <Card maxW='lg'>
@@ -45,9 +46,7 @@ function PostCard({ userName,userImage, description, postImage }) {
                 <Button flex='1' variant='ghost' leftIcon={<BiLike />}>
                     Like
                 </Button>
-                <Button flex='1' variant='ghost' leftIcon={<BiChat />}>
-                    Comment
-                </Button>
+               <CommentModal postId={postId}/>
                 <Button flex='1' variant='ghost' leftIcon={<BiShare />}>
                     Share
                 </Button>

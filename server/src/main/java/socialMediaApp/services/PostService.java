@@ -38,7 +38,7 @@ public class PostService {
     }
 
     public List<PostGetResponse> getAllByUser(int userId){
-        List<Post> userPosts = postRepository.findAllByUser_Id(userId);
+        List<Post> userPosts = postRepository.findAllByUser_IdOrderByIdDesc(userId);
         return postMapper.postsToGetResponses(userPosts);
     }
 
@@ -47,7 +47,7 @@ public class PostService {
         List<Post> set = new ArrayList<>();
 
         for(UserFollowingResponse user : follows){
-           set.addAll(postRepository.findAllByUser_Id(user.getUserId()));
+           set.addAll(postRepository.findAllByUser_IdOrderByIdDesc(user.getUserId()));
         }
 
         set.sort(Comparator.comparing(Post::getId).reversed());

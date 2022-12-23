@@ -23,8 +23,8 @@ import { useNavigate } from 'react-router-dom'
 
 function AddPost() {
 
-    const {user} = useContext(AuthContext)
-    const [file, setFile] = useState()
+    const { user } = useContext(AuthContext)
+    const [file, setFile] = useState(null)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const toast = useToast()
     const token = localStorage.getItem("token")
@@ -44,28 +44,29 @@ function AddPost() {
             description: ""
         },
         onSubmit: async (values) => {
-           try {
-            values.userId = user.id
-            const result = await postService.add(values,token)
-            const postId = result.data
-            formData.append("postId",postId)
-            formData.append("image",file)
-            await postImageService.upload(formData,token)
-            toast({
-                title:"Post Shared",
-                status: 'success',
-                duration: 9000,
-                isClosable: true,
-              })
-            navigate("/profile")
-           } catch (error) {
-            console.log(error.message)
-            toast({
-                status: 'error',
-                duration: 9000,
-                isClosable: true,
-              })
-           }
+            try {
+                values.userId = user.id
+                const result = await postService.add(values, token)
+                const postId = result.data
+                if (file) {
+                    formData.append("postId", postId)
+                    formData.append("image", file)
+                    await postImageService.upload(formData, token)
+                }
+                toast({
+                    title: "Post Shared",
+                    status: 'success',
+                    duration: 9000,
+                    isClosable: true,
+                })
+                navigate("/profile")
+            } catch (error) {
+                toast({
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
+            }
         }
     })
 
@@ -83,7 +84,7 @@ function AddPost() {
                     <ModalBody pb={6}>
                         <FormControl>
                             <FormLabel>Description</FormLabel>
-                            <Textarea 
+                            <Textarea
                                 placeholder='Description'
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -95,8 +96,8 @@ function AddPost() {
                         <FormControl mt={4}>
                             <FormLabel>Upload Image</FormLabel>
                             <Button colorScheme={'pink'} as={'label'}>
-                            {file ? file.name : " Upload Image"}             
-                                <input hidden type={'file'} 
+                                {file ? file.name : " Upload Image"}
+                                <input hidden type={'file'}
                                     accept="image/*" onChange={handleImageChance} placeholder='Last name' />
                             </Button>
 

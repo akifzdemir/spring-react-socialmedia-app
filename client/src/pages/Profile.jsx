@@ -1,5 +1,5 @@
-import { Center, Heading, VStack } from '@chakra-ui/react'
-import { useEffect, useState, useContext, useMemo } from 'react'
+import { Center, VStack } from '@chakra-ui/react'
+import { useEffect, useState, useContext } from 'react'
 import Nav from '../components/Nav'
 import PostCard from '../components/PostCard'
 import AuthContext from '../context/AuthContext'
@@ -43,8 +43,9 @@ function Profile() {
                             <PostCard
                                 key={post.id}
                                 description={post.description}
-                                userName={user.userName}
+                                userName={user.fullName}
                                 postImage={imageUrl + post.id}
+                                postId={post.id}
                             // userImage={user.userImages[0]}
 
                             />

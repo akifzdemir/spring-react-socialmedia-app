@@ -1,4 +1,4 @@
-import { Center, Heading, VStack } from '@chakra-ui/react'
+import { Center, VStack } from '@chakra-ui/react'
 import { useContext, useEffect, useState } from 'react'
 import Nav from '../components/Nav'
 import PostCard from '../components/PostCard'
@@ -44,6 +44,7 @@ function Home() {
                                 description={post.description}
                                 userName={post.userName +" "+post.userLastName}
                                 postImage={imageUrl + post.id}
+                                postId={post.id}
                             // userImage={user.userImages[0]}
 
                             />
