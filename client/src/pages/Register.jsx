@@ -1,6 +1,7 @@
 import { Button, Container, Flex, FormControl, FormLabel, Heading, Image, Input, Stack, Text, useBreakpointValue, useToast, VStack } from '@chakra-ui/react'
 import { useFormik } from 'formik'
 import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 import AuthService from '../services/AuthService'
 import svg from '../svgs/main.svg'
@@ -115,7 +116,9 @@ function Register() {
                 name='password'
                 type='password' />
             </FormControl>
-            <Button type='submit' colorScheme={'pink'}>Submit</Button>
+            <Button type='submit' colorScheme={'pink'}>Register</Button>
+            <Button as={Link} to={"/login"} >Login</Button>
+           
           </VStack>
         </Container>
       </Flex>

@@ -8,10 +8,7 @@ import socialMediaApp.requests.PostAddRequest;
 import socialMediaApp.responses.post.PostGetResponse;
 import socialMediaApp.responses.user.UserFollowingResponse;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class PostService {
@@ -47,13 +44,15 @@ public class PostService {
 
     public List<PostGetResponse> getByUserFollowing(int userId){
         List<UserFollowingResponse> follows = userService.getUserFollowing(userId);
-        Set<Post> set = new HashSet<>();
+        List<Post> set = new ArrayList<>();
 
         for(UserFollowingResponse user : follows){
            set.addAll(postRepository.findAllByUser_Id(user.getUserId()));
         }
 
-        return postMapper.postsToGetResponses(new ArrayList<>(set));
+        set.sort(Comparator.comparing(Post::getId).reversed());
+
+        return postMapper.postsToGetResponses(set);
     }
 
     public int add(PostAddRequest postAddRequest){

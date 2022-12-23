@@ -41,7 +41,10 @@ public class AuthController {
               );
               return new ResponseEntity<>(jwtUtil.generateToken(
                       loginRequest.getEmail(),
-                      userRepository.findByEmail(loginRequest.getEmail()).getId())
+                      userRepository.findByEmail(loginRequest.getEmail()).getId(),
+                      userRepository.findByEmail(loginRequest.getEmail()).getName()+
+                              " "+ userRepository.findByEmail(loginRequest.getEmail()).getLastName()
+                        )
                       ,HttpStatus.OK
               );
           }catch (Exception e){
@@ -64,9 +67,13 @@ public class AuthController {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(registerRequest.getEmail(), registerRequest.getPassword())
         );
-        return new ResponseEntity<>(jwtUtil.generateToken(registerRequest.getEmail(),
-                userRepository.findByEmail(registerRequest.getEmail()).getId())
-                ,HttpStatus.OK);
+        return new ResponseEntity<>(jwtUtil.generateToken(
+                registerRequest.getEmail(),
+                userRepository.findByEmail(registerRequest.getEmail()).getId(),
+                registerRequest.getName() +" "+registerRequest.getLastName()
+        )
+                ,HttpStatus.OK
+        );
     }
 
 }

@@ -1,77 +1,57 @@
-import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
-import UserService from "../services/UserService";
+import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
-export const AuthProvider =({children})=>{
+export const AuthProvider = ({ children }) => {
 
-    const [auth,setAuth] = useState(false)
-    const [user,setUser] = useState({name:"",lastName:"",email:""})
     const navigate = useNavigate()
-    const userService = new UserService()
+    const [isAuthenticated, setIsAuthenticated] = useState(
+        localStorage.getItem("isAuthenticated") || false
+    );
+    const [user, setUser] = useState(
+        JSON.parse(localStorage.getItem("user")) || {}
+    );
 
-    const login = (token)=>{
-        if (token) {
-            localStorage.setItem('token',token)
-            setAuth(true)
-            navigate("/home")
-        }
-    }
-
-    const isLogged= async()=>{
-        const token = localStorage.getItem("token")    
-        try {
-            if (token) {
-                const decode = await jwtDecode(token)
-                const user = await userService.getById(decode.userId,token)
-                 setUser(user.data)
-                 setAuth(true)
-            }else{
-                setAuth(false)
-                setUser({})
-            }
-        } catch (error) {          
-            setAuth(false)
-            setUser({})
-        }
-    }
+    const login = (token) => {
+        const decodedToken = jwtDecode(token);
+        setUser(decodedToken.user);
+        setIsAuthenticated(true);
+        localStorage.setItem("isAuthenticated", true);
+        localStorage.setItem("user", JSON.stringify(decodedToken.user));
+        navigate("/home")
+    };
 
     const logout = () => {
-        localStorage.removeItem("token")
-        setAuth(false)
+        setIsAuthenticated(false);
+        setUser({});
+        localStorage.removeItem("isAuthenticated");
+        localStorage.removeItem("user");
         navigate("/")
-    }
+    };
 
-    const checkTokenExprired = async () => {
-        const token = localStorage.getItem("token")
-        if (token) {
-            let decode = await jwtDecode(token)
-            let currentDate = new Date();
-            if (decode.exp * 1000 < currentDate.getTime()) {
-                localStorage.removeItem("token")
-                console.log("Token Exprired")
-                setAuth(false)
-                navigate("/")
+    useEffect(() => {
+        console.log(user)
+        const checkTokenExpired = () => {
+            const token = localStorage.getItem("token");
+            if (token) {
+                const decodedToken = jwtDecode(token);
+                const currentTime = Date.now() / 1000;
+                if (decodedToken.exp < currentTime) {
+                    logout();
+                }
             }
+        };
+
+        if (isAuthenticated) {
+            checkTokenExpired();
         }
-    }
+    }, [isAuthenticated]);
 
-    useEffect(()=>{
-        isLogged()
-        checkTokenExprired()
-    },[auth])
+    const value = { isAuthenticated, login, logout, user };
 
-    const values = {
-        auth,
-        setAuth,
-        login,
-        logout,
-        user
-    }
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
 
-    return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>
-}
-
-export default AuthContext
+export default AuthContext;

@@ -43,8 +43,7 @@ function Profile() {
                             <PostCard
                                 key={post.id}
                                 description={post.description}
-                                firstName={user.name}
-                                lastName={user.lastName}
+                                userName={user.userName}
                                 postImage={imageUrl + post.id}
                             // userImage={user.userImages[0]}
 

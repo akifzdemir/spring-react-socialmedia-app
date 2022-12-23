@@ -17,6 +17,7 @@ function Home() {
             if (user.id !== undefined) {
                 const result = await postService.getAllByUserFollowing(user.id, localStorage.getItem("token"))
                 setPosts(result.data)
+                console.log(posts)
             }
 
         } catch (error) {
@@ -32,7 +33,7 @@ function Home() {
     return (
         <>
             <Nav />
-            <ProfileCard firstName={user.name} lastName={user.lastName} />
+            <ProfileCard userName={user.fullName} />
             <Center>
 
                 <VStack marginTop={'50px'} spacing={5}>
@@ -41,8 +42,7 @@ function Home() {
                             <PostCard
                                 key={post.id}
                                 description={post.description}
-                                firstName={post.userName}
-                                lastName={post.userLastName}
+                                userName={post.userName +" "+post.userLastName}
                                 postImage={imageUrl + post.id}
                             // userImage={user.userImages[0]}
 

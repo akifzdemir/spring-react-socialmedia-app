@@ -3,7 +3,7 @@ import { Card, CardHeader, Box, Flex, Avatar, Heading, Text, Button, HStack } fr
 import { Link } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
 
-function ProfileCard({firstName,lastName,userImage}) {
+function ProfileCard({userName,userImage}) {
 
     const {logout} = useContext(AuthContext)
 
@@ -13,10 +13,10 @@ function ProfileCard({firstName,lastName,userImage}) {
                 <CardHeader>
                     <HStack justifyContent={'center'} alignItems={'center'} spacing='4'>
                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                            <Avatar name={firstName +" "+lastName} src={userImage} />
+                            <Avatar name={userName} src={userImage} />
                             <Box>
                                 <Text>Logged in as :</Text>
-                                <Heading size='sm'>{firstName +" "+lastName}</Heading>
+                                <Heading size='sm'>{userName}</Heading>
                                
                             </Box>
                         </Flex>

@@ -1,17 +1,17 @@
 import { Flex, Card, CardHeader, CardBody, CardFooter, Button, Avatar, Box, Heading, Text, Image } from '@chakra-ui/react'
 import { BiLike, BiChat, BiShare } from 'react-icons/bi'
 
-function PostCard({ firstName, lastName, userImage, description, postImage }) {
+function PostCard({ userName,userImage, description, postImage }) {
 
     return (
         <Card maxW='lg'>
             <CardHeader>
                 <Flex spacing='4'>
                     <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                        <Avatar name={firstName + " " + lastName} src={userImage} />
+                        <Avatar name={userName} src={userImage} />
 
                         <Box>
-                            <Heading size='sm'>{firstName + " " + lastName}</Heading>
+                            <Heading size='sm'>{userName}</Heading>
 
                         </Box>
                     </Flex>

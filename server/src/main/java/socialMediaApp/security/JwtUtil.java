@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import socialMediaApp.requests.RegisterRequest;
+import socialMediaApp.responses.user.UserJwtResponse;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -39,9 +41,13 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(String username,int userId) {
+    public String generateToken(String username,int userId,String fullName) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("userId",userId);
+        UserJwtResponse userJwtResponse = new UserJwtResponse();
+        userJwtResponse.setId(userId);
+        userJwtResponse.setEmail(username);
+        userJwtResponse.setFullName(fullName);
+        claims.put("user",userJwtResponse);
         return createToken(claims, username);
     }
 
