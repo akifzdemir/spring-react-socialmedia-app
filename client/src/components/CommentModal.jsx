@@ -98,7 +98,7 @@ function CommentModal({ postId }) {
                         <VStack spacing={2}>
                             {
                                 comments.map(comment => (
-                                    <Card width={"100%"} size={'sm'}>
+                                    <Card key={comment.id} width={"100%"} size={'sm'}>
                                         <CardBody>
                                             <Heading size={'md'}>{comment.userName + " " + comment.userLastName}</Heading>
                                             <Text>{comment.description}</Text>

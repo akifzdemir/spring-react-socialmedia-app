@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
         const decodedToken = jwtDecode(token);
         setUser(decodedToken.user);
         setIsAuthenticated(true);
+        localStorage.setItem("token",token)
         localStorage.setItem("isAuthenticated", true);
         localStorage.setItem("user", JSON.stringify(decodedToken.user));
         navigate("/home")
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }) => {
         setUser({});
         localStorage.removeItem("isAuthenticated");
         localStorage.removeItem("user");
+        localStorage.removeItem("token")
         navigate("/")
     };
 
@@ -40,6 +42,7 @@ export const AuthProvider = ({ children }) => {
                 const currentTime = Date.now() / 1000;
                 if (decodedToken.exp < currentTime) {
                     logout();
+                    console.log("token expired")
                 }
             }
         };

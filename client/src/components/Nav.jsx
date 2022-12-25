@@ -4,16 +4,11 @@ import {
   Stack,
   Button,
 } from '@chakra-ui/react';
-import { useContext } from 'react';
 import { BiHome } from 'react-icons/bi'
-import AuthContext from '../context/AuthContext';
 import AddPost from '../pages/AddPost';
 import NavItem from './NavItem';
 
 function Nav() {
-
-
-
   return (
     <Box top={{lg:4}} zIndex={1} w={{ sm: "100%", lg: '30vh' }} position={{ sm:'sticky', lg: 'fixed' }} px={5}>
       <Stack
