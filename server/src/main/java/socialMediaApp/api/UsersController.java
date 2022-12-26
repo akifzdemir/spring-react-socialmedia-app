@@ -28,6 +28,11 @@ public class UsersController {
         return new ResponseEntity<>(userService.getResponseById(id),HttpStatus.OK);
     }
 
+    @GetMapping("/isfollowing")
+    public ResponseEntity<Boolean> isFollowing(@RequestParam int userId,@RequestParam int followingId){
+        return new ResponseEntity<>(userService.isFollowing(userId,followingId),HttpStatus.OK);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<String> add(@RequestBody UserAddRequest userAddRequest){
         userService.add(userAddRequest);

@@ -1,12 +1,10 @@
-import { Button } from '@chakra-ui/react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import AuthContext, { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import Register from './pages/Register';
 import Login from './pages/Login'
-import Profile from './pages/Profile';
 import Home from './pages/Home';
-import { useContext } from 'react';
+import Profile from './pages/Profile';
 
 function App() {
 
@@ -17,9 +15,9 @@ function App() {
  
     <Routes>
       <Route path='/' element={<Register/>}/>
-      <Route path='/profile' element={<Profile/>} />
       <Route path='/login' element={<Login/>}/>
       <Route path='/home' element={<Home/>} />
+      <Route path='/profile/:userId' element={<Profile/>}/>
     </Routes>
     </AuthProvider>
     </>

@@ -2,6 +2,7 @@ package socialMediaApp.services;
 
 import org.springframework.stereotype.Service;
 import socialMediaApp.mappers.UserMapper;
+import socialMediaApp.models.Follow;
 import socialMediaApp.models.User;
 import socialMediaApp.repositories.FollowRepository;
 import socialMediaApp.repositories.UserRepository;
@@ -10,6 +11,7 @@ import socialMediaApp.responses.user.UserFollowingResponse;
 import socialMediaApp.responses.user.UserResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -40,6 +42,12 @@ public class UserService {
     public List<UserFollowingResponse> getUserFollowing(int userId){
         return userMapper.followsToFollowingResponses(followRepository.findAllByUser_Id(userId));
     }
+
+    public boolean isFollowing(int userId,int followingId){
+       Optional<Follow> follow = followRepository.findByUser_IdAndFollowing_Id(userId,followingId);
+       return follow.isPresent();
+    }
+
     public User getById(int id){
         return userRepository.findById(id).get();
     }

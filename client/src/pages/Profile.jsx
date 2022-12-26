@@ -1,59 +1,83 @@
-import { Center, VStack } from '@chakra-ui/react'
-import { useEffect, useState, useContext } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import Nav from '../components/Nav'
-import PostCard from '../components/PostCard'
+import Posts from '../components/Posts'
+import UserCard from '../components/UserCard'
 import AuthContext from '../context/AuthContext'
 import PostService from '../services/PostService'
+import UserService from '../services/UserService'
 
 function Profile() {
 
+    const { userId } = useParams()
     const { user } = useContext(AuthContext)
-    const postService = new PostService()
     const [posts, setPosts] = useState([])
-    const imageUrl = process.env.REACT_APP_API + "postimages/download/"
-
-
-    const getUserPosts = async () => {
+    const [viewedUser, setViewedUser] = useState({})
+    const [followers, setFollowers] = useState([])
+    const [following, setFollowing] = useState([])
+    const [isOwner,setIsOwner] = useState(false)
+    const [isFollowing, setIsFollowing] = useState(false)
+    
+   
+    const getData = useCallback(async() => {
+        const postService = new PostService()
         try {
-            if (user.id !== undefined) {
-                const result = await postService.getAllByUserId(user.id, localStorage.getItem("token"))
-                console.log(result.data)
-                setPosts(result.data)
-            }
+            const result = await postService.getAllByUserId(userId, localStorage.getItem("token"))
+            setPosts(result.data)
         } catch (error) {
             console.log(error.message)
         }
-    }
+    },[userId])
 
+    const getUser = useCallback(async () => {
+        const userService = new UserService()
+        try {
+            const result = await userService.getById(userId, localStorage.getItem("token"))
+            setViewedUser(result.data)
+            setFollowing(result.data.following)
+            setFollowers(result.data.followers)
+        } catch (error) {
+            console.log(error.message)
+        }
+    },[userId])
 
+    const checkIsFollowing =useCallback(async () => {
+        const userService = new UserService()
+
+        try {
+            const result = await userService.isFollowing(user.id, userId, localStorage.getItem("token"))
+            setIsFollowing(result.data)
+        } catch (error) {
+            console.log(error.message)
+        }
+    },[userId,user.id])
+
+    const checkIsOwner = useCallback(()=>{
+        if (userId == user.id) {
+            setIsOwner(true)
+        }else{
+            setIsOwner(false)
+        }
+    },[userId,user.id])
 
     useEffect(() => {
-        getUserPosts()
-    }, [user])
+        getData()
+        getUser()
+        checkIsFollowing()
+        checkIsOwner()
+    }, [getData,getUser,checkIsFollowing,checkIsOwner])
 
     return (
         <>
             <Nav />
-           
-            <Center>
-            
-                <VStack marginTop={'50px'} spacing={5}>
-                    {
-                        posts.map(post => (
-                            <PostCard
-                                key={post.id}
-                                description={post.description}
-                                userName={user.fullName}
-                                postImage={imageUrl + post.id}
-                                postId={post.id}
-                            // userImage={user.userImages[0]}
-
-                            />
-                        ))
-                    }
-                </VStack>
-            </Center>
-
+            <UserCard
+                fullName={viewedUser.name + " " + viewedUser.lastName}
+                following={following.length}
+                followers={followers.length}
+                isFollowing={isFollowing}
+                isOwner = {isOwner}
+            />
+            <Posts posts={posts} />
         </>
     )
 }

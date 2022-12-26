@@ -9,4 +9,12 @@ export default class UserService{
             }
         });
     }
+
+    isFollowing(userId,followingId,token){
+        return axios.get(process.env.REACT_APP_API+`users/isfollowing?userId=${userId}&followingId=${followingId}`,{
+            headers:{
+                'Authorization':"Bearer "+token
+            }
+        });
+    }
 }

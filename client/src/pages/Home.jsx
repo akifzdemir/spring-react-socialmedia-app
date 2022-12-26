@@ -2,6 +2,7 @@ import { Center, VStack } from '@chakra-ui/react'
 import { useContext, useEffect, useState } from 'react'
 import Nav from '../components/Nav'
 import PostCard from '../components/PostCard'
+import Posts from '../components/Posts'
 import ProfileCard from '../components/ProfileCard'
 import AuthContext from '../context/AuthContext'
 import PostService from '../services/PostService'
@@ -34,24 +35,8 @@ function Home() {
         <>
             <Nav />
             <ProfileCard userName={user.fullName} />
-            <Center>
-
-                <VStack marginTop={'50px'} spacing={5}>
-                    {
-                        posts.map(post => (
-                            <PostCard
-                                key={post.id}
-                                description={post.description}
-                                userName={post.userName +" "+post.userLastName}
-                                postImage={imageUrl + post.id}
-                                postId={post.id}
-                            // userImage={user.userImages[0]}
-
-                            />
-                        ))
-                    }
-                </VStack>
-            </Center>
+            <Posts posts={posts}/>
+            
 
         </>
     )
