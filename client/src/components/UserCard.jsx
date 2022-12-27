@@ -9,10 +9,67 @@ import {
     Stack,
     Button,
     useColorModeValue,
+    useToast,
 } from '@chakra-ui/react';
+import { useContext } from 'react';
+import AuthContext from '../context/AuthContext';
+import FollowService from '../services/FollowService';
 
 
-function UserCard({ image, fullName, followers, following, isFollowing, isOwner }) {
+function UserCard({ image, fullName, followers, following, isFollowing, isOwner, userId, checkIsFollowing }) {
+
+    const { user } = useContext(AuthContext)
+    const followService = new FollowService()
+    const toast = useToast()
+
+    const handleFollow = async (userId, followingId) => {
+        try {
+            const values = { userId, followingId }
+            console.log(values)
+            const result = await followService.follow(values, localStorage.getItem("token"))
+            checkIsFollowing()
+            toast({
+                title: "Followed",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        } catch (error) {
+            toast({
+                title: "",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+            console.log(error)
+        }
+    }
+
+    const handleUnFollow = async (userId, followingId) => {
+        try {
+            const values = { userId, followingId }
+            
+            const result = await followService.unfollow(values, localStorage.getItem("token"))
+            checkIsFollowing()
+            toast({
+                title: "Unfollowed",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
+        } catch (error) {
+            const values = { userId, followingId }
+            console.log(values)
+            toast({
+                title: "",
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+
+        }
+    }
+
     return (
         <>
             <Flex position={{ base: 'relative', xl: 'fixed' }} alignItems={{ base: 'center', xl: 'flex-end' }} justifyContent={{ base: 'center', xl: 'flex-end' }} width={"100%"} right={{ xl: 12 }} top={{ base: 4, xl: 12 }}>
@@ -36,7 +93,7 @@ function UserCard({ image, fullName, followers, following, isFollowing, isOwner 
                             <Avatar
                                 size={'xl'}
                                 src={image}
-                                name = {fullName!==undefined && fullName}
+                                name={fullName}
                                 alt={'Author'}
                                 css={{
                                     border: '2px solid white',
@@ -47,7 +104,7 @@ function UserCard({ image, fullName, followers, following, isFollowing, isOwner 
                         <Box p={6}>
                             <Stack spacing={0} align={'center'} mb={5}>
                                 <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
-                                    {fullName !== undefined && fullName}
+                                    {fullName}
                                 </Heading>
                             </Stack>
 
@@ -66,17 +123,33 @@ function UserCard({ image, fullName, followers, following, isFollowing, isOwner 
                                 </Stack>
                             </Stack>
                             {
-                                !isOwner &&
-                                <Button
-                                    w={'full'}
-                                    mt={8}
-                                    colorScheme = 'pink'
-                                    color={'white'}
-                                    rounded={'md'}
-                                    >                        
-                                    {isFollowing ? 'Followed' : 'Follow'}
-                                </Button>
+
+                                isFollowing ?
+                                    <Button
+                                        w={'full'}
+                                        mt={8}
+                                        colorScheme='blackAlpha'
+                                        color={'white'}
+                                        rounded={'md'}
+                                        onClick={() => { handleUnFollow(user.id, parseInt(userId)) }}
+                                    >
+                                        Followed
+                                    </Button>
+                                    :
+                                    <Button
+                                        w={'full'}
+                                        mt={8}
+                                        colorScheme='pink'
+                                        color={'white'}
+                                        rounded={'md'}
+                                        onClick={() => { handleFollow(user.id, parseInt(userId)) }}
+                                    >
+                                        Follow
+                                    </Button>
+
+
                             }
+
 
                         </Box>
                     </Box>

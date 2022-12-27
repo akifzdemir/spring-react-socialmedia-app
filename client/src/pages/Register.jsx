@@ -117,7 +117,7 @@ function Register() {
                 type='password' />
             </FormControl>
             <Button type='submit' colorScheme={'pink'}>Register</Button>
-            <Button as={Link} to={"/login"} >Login</Button>
+            <Button as={Link} to={"/login"}>Login</Button>
            
           </VStack>
         </Container>

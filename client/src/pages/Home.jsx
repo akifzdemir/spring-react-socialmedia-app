@@ -1,42 +1,50 @@
-import { Center, VStack } from '@chakra-ui/react'
-import { useContext, useEffect, useState } from 'react'
+import { Center, Heading, HStack, Image, VStack } from '@chakra-ui/react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import Nav from '../components/Nav'
-import PostCard from '../components/PostCard'
 import Posts from '../components/Posts'
 import ProfileCard from '../components/ProfileCard'
 import AuthContext from '../context/AuthContext'
 import PostService from '../services/PostService'
+import svg from '../svgs/undraw_no_data_re_kwbl.svg'
 
 function Home() {
     const { user } = useContext(AuthContext)
-    const postService = new PostService()
     const [posts, setPosts] = useState([])
-    const imageUrl = process.env.REACT_APP_API + "postimages/download/"
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
+        const postService = new PostService()
         try {
             if (user.id !== undefined) {
                 const result = await postService.getAllByUserFollowing(user.id, localStorage.getItem("token"))
                 setPosts(result.data)
-                console.log(posts)
             }
 
         } catch (error) {
             console.log(error.message)
         }
-    }
+    }, [user.id])
 
     useEffect(() => {
         getData()
-    }, [user])
+    }, [getData])
 
 
     return (
         <>
             <Nav />
             <ProfileCard userName={user.fullName} />
-            <Posts posts={posts}/>
-            
+            {
+                posts.length === 0 ?
+                    <Center>
+                        <VStack h={'100vh'} alignItems={'center'} justifyContent={'center'}>
+                            <Heading>No posts to show</Heading>
+                            <Image src={svg} h={'50vh'} />
+                        </VStack>
+
+                    </Center>
+                    :
+                    <Posts posts={posts} />
+            }
 
         </>
     )

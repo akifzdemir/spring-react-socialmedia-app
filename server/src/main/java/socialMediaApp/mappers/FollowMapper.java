@@ -3,7 +3,7 @@ package socialMediaApp.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import socialMediaApp.models.Follow;
-import socialMediaApp.requests.FollowAddRequest;
+import socialMediaApp.requests.FollowRequest;
 import socialMediaApp.responses.follow.FollowResponse;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface FollowMapper {
 
     @Mapping(source = "userId",target = "user.id")
     @Mapping(source = "followingId",target = "following.id")
-    Follow addRequestToFollow(FollowAddRequest followAddRequest);
+    Follow addRequestToFollow(FollowRequest followAddRequest);
 
     List<FollowResponse> followsToResponses(List<Follow> follows);
 }

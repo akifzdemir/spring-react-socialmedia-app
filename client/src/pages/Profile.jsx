@@ -39,7 +39,7 @@ function Profile() {
         } catch (error) {
             console.log(error.message)
         }
-    },[userId])
+    },[userId,isFollowing])
 
     const checkIsFollowing =useCallback(async () => {
         const userService = new UserService()
@@ -76,6 +76,8 @@ function Profile() {
                 followers={followers.length}
                 isFollowing={isFollowing}
                 isOwner = {isOwner}
+                userId={userId}
+                checkIsFollowing={checkIsFollowing}
             />
             <Posts posts={posts} />
         </>

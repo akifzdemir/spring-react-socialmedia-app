@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class FollowAddRequest {
+public class FollowRequest {
     private int userId;
     private int followingId;
 }

@@ -59,7 +59,7 @@ function AddPost() {
                     duration: 9000,
                     isClosable: true,
                 })
-                navigate("/profile")
+                navigate(`/profile/${user.id}`)
             } catch (error) {
                 toast({
                     status: 'error',

@@ -7,19 +7,17 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 
 function App() {
-
-
   return (
     <>
-   <AuthProvider>
- 
-    <Routes>
-      <Route path='/' element={<Register/>}/>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/home' element={<Home/>} />
-      <Route path='/profile/:userId' element={<Profile/>}/>
-    </Routes>
-    </AuthProvider>
+      <AuthProvider>
+        <Routes>
+          <Route path='/' element={<Register />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/profile/:userId' element={<Profile />} />
+        </Routes>
+      </AuthProvider>
+
     </>
   );
 }

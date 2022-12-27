@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import {
     Modal,
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
     Button,
@@ -15,35 +14,35 @@ import {
     InputGroup,
     Card,
     CardBody,
-    CardHeader,
     Heading,
-    HStack,
     VStack,
 } from '@chakra-ui/react'
 import CommentService from '../services/CommentService'
 import { useFormik } from 'formik'
 import AuthContext from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 
 function CommentModal({ postId }) {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { user } = useContext(AuthContext)
 
-    const commentService = new CommentService()
+   
     const [comments, setComments] = useState([])
-    const getData = async () => {
+    const getData = useCallback( async () => {
+        const commentService = new CommentService()
         try {
             const result = await commentService.getAllByPost(postId, localStorage.getItem("token"))
             setComments(result.data)
         } catch (error) {
             console.log(error)
         }
-    }
+    },[postId,])
 
 
     useEffect(() => {
         getData()
-    }, [postId])
+    }, [getData])
 
     const formik = useFormik({
         initialValues: {
@@ -52,6 +51,7 @@ function CommentModal({ postId }) {
             userId: user.id
         },
         onSubmit: async (values) => {
+            const commentService = new CommentService()
             try {
                 await commentService.add(values, localStorage.getItem("token"))
                 getData()
@@ -98,7 +98,7 @@ function CommentModal({ postId }) {
                         <VStack spacing={2}>
                             {
                                 comments.map(comment => (
-                                    <Card key={comment.id} width={"100%"} size={'sm'}>
+                                    <Card as={Link} to={`/profile/${comment.userId}`} key={comment.id} width={"100%"} size={'sm'}>
                                         <CardBody>
                                             <Heading size={'md'}>{comment.userName + " " + comment.userLastName}</Heading>
                                             <Text>{comment.description}</Text>
