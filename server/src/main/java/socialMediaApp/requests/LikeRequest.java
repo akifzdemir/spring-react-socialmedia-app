@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LikeAddRequest {
+public class LikeRequest {
     private int postId;
     private int userId;
 }

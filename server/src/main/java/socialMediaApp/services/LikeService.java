@@ -4,10 +4,11 @@ import org.springframework.stereotype.Service;
 import socialMediaApp.mappers.LikeMapper;
 import socialMediaApp.models.Like;
 import socialMediaApp.repositories.LikeRepository;
-import socialMediaApp.requests.LikeAddRequest;
+import socialMediaApp.requests.LikeRequest;
 import socialMediaApp.responses.like.LikeResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LikeService {
@@ -30,13 +31,22 @@ public class LikeService {
         return likeMapper.likesToLikeResponses(likes);
     }
 
-    public void add(LikeAddRequest likeAddRequest){
-        Like like = likeMapper.requestToLike(likeAddRequest);
+    public boolean isLiked(int userId,int postId){
+        Optional<Like> like = likeRepository.findByUser_IdAndPost_Id(userId,postId);
+        return like.isPresent();
+    }
+
+    public void add(LikeRequest likeRequest){
+        if (isLiked(likeRequest.getUserId(), likeRequest.getPostId())){
+            return;
+        }
+        Like like = likeMapper.requestToLike(likeRequest);
         likeRepository.save(like);
     }
 
-    public void delete(int id){
-        likeRepository.deleteLikeById(id);
+    public void delete(LikeRequest likeRequest){
+        Optional<Like> like = likeRepository.findByUser_IdAndPost_Id(likeRequest.getUserId(),likeRequest.getPostId());
+       likeRepository.delete(like.get());
     }
 
 }

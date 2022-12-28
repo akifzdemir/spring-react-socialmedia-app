@@ -1,9 +1,60 @@
 import { Flex, Card, CardHeader, CardBody, CardFooter, Button, Avatar, Box, Heading, Text, Image } from '@chakra-ui/react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { BiLike, BiChat, BiShare } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
+import AuthContext from '../context/AuthContext'
+import LikeService from '../services/LikeService'
 import CommentModal from './CommentModal'
 
-function PostCard({ userName,userImage, description, postImage,postId,userId }) {
+function PostCard({ userName, userImage, description, postImage, postId, userId }) {
+
+
+    const likeService = new LikeService()
+    const { user } = useContext(AuthContext)
+    const [isLiked, setIsLiked] = useState(false);
+    const [likes, setLikes] = useState([])
+
+    const handleLike = async () => {
+        try {
+            await likeService.add(user.id, postId, localStorage.getItem("token"))
+            getLikes()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleUnlike = async () => {
+        try {
+            await likeService.delete(user.id, postId, localStorage.getItem("token"))
+            getLikes()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const checkIsLiked = useCallback(async () => {
+        try {
+            const result = await likeService.isLiked(user.id, postId, localStorage.getItem("token"))
+            setIsLiked(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }, [user.id, postId,likes.length])
+
+    const getLikes = useCallback(async () => {
+        try {
+            const result = await likeService.getLikesByPost(postId, localStorage.getItem("token"))
+            setLikes(result.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }, [postId])
+
+    useEffect(() => {
+        checkIsLiked()
+        getLikes()
+    }, [checkIsLiked, getLikes])
+
 
     return (
         <Card maxW='lg'>
@@ -25,7 +76,7 @@ function PostCard({ userName,userImage, description, postImage,postId,userId }) 
                 </Text>
             </CardBody>
             {
-               <Image
+                <Image
                     maxW={'md'}
                     maxH={'sm'}
                     objectFit='contain'
@@ -44,10 +95,17 @@ function PostCard({ userName,userImage, description, postImage,postId,userId }) 
                     },
                 }}
             >
-                <Button flex='1' variant='ghost' leftIcon={<BiLike />}>
-                    Like
-                </Button>
-               <CommentModal postId={postId}/>
+                {
+                    isLiked ?
+                        <Button onClick={()=>handleUnlike()} flex='1' colorScheme={'pink'} leftIcon={<BiLike />}>
+                            Like {likes.length}
+                        </Button>
+                        : <Button onClick={() => handleLike()} flex='1' variant='ghost' leftIcon={<BiLike />}>
+                            Like {likes.length}
+                        </Button>
+                }
+
+                <CommentModal postId={postId} />
                 <Button flex='1' variant='ghost' leftIcon={<BiShare />}>
                     Share
                 </Button>

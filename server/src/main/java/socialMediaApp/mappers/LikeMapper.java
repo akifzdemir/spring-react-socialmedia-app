@@ -3,7 +3,7 @@ package socialMediaApp.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import socialMediaApp.models.Like;
-import socialMediaApp.requests.LikeAddRequest;
+import socialMediaApp.requests.LikeRequest;
 import socialMediaApp.responses.like.LikeResponse;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public interface LikeMapper {
 
     @Mapping(source = "postId",target = "post.id")
     @Mapping(source = "userId",target = "user.id")
-    Like requestToLike(LikeAddRequest likeAddRequest);
+    Like requestToLike(LikeRequest likeRequest);
 
     List<LikeResponse> likesToLikeResponses(List<Like> likes);
 
