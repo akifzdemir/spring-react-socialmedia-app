@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { BiHome } from 'react-icons/bi'
+import {CgProfile} from 'react-icons/cg'
 import AuthContext from '../context/AuthContext';
 import AddPost from '../pages/AddPost';
 import NavItem from './NavItem';
@@ -26,7 +27,7 @@ function Nav() {
         boxShadow={'2xl'}
       >
         <NavItem description={'Home'} icon={<BiHome/>} path={"/home"}/>
-        <NavItem description={'Profile'} icon={<BiHome/>} path={`/profile/${user.id}`}/>
+        <NavItem description={'Profile'} icon={<CgProfile/>} path={`/profile/${user.id}`}/>
         <AddPost/>
 
       

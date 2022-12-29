@@ -1,3 +1,4 @@
+import { Center, Heading, Image, VStack } from '@chakra-ui/react'
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Nav from '../components/Nav'
@@ -5,6 +6,7 @@ import Posts from '../components/Posts'
 import UserCard from '../components/UserCard'
 import AuthContext from '../context/AuthContext'
 import PostService from '../services/PostService'
+import svg from '../svgs/undraw_no_data_re_kwbl.svg'
 import UserService from '../services/UserService'
 
 function Profile() {
@@ -79,7 +81,18 @@ function Profile() {
                 userId={userId}
                 checkIsFollowing={checkIsFollowing}
             />
-            <Posts posts={posts} />
+            {
+                posts.length === 0 ?
+                    <Center>
+                        <VStack h={'100vh'} alignItems={'center'} justifyContent={'center'}>
+                            <Heading>No posts to show</Heading>
+                            <Image src={svg} h={'50vh'} />
+                        </VStack>
+
+                    </Center>
+                    :
+                    <Posts posts={posts} />
+            }
         </>
     )
 }

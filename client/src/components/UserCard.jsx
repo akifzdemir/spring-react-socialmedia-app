@@ -48,8 +48,7 @@ function UserCard({ image, fullName, followers, following, isFollowing, isOwner,
     const handleUnFollow = async (userId, followingId) => {
         try {
             const values = { userId, followingId }
-            
-            const result = await followService.unfollow(values, localStorage.getItem("token"))
+            await followService.unfollow(values, localStorage.getItem("token"))
             checkIsFollowing()
             toast({
                 title: "Unfollowed",
@@ -123,8 +122,8 @@ function UserCard({ image, fullName, followers, following, isFollowing, isOwner,
                                 </Stack>
                             </Stack>
                             {
-
                                 isFollowing ?
+                                    !isOwner &&
                                     <Button
                                         w={'full'}
                                         mt={8}
@@ -136,6 +135,7 @@ function UserCard({ image, fullName, followers, following, isFollowing, isOwner,
                                         Followed
                                     </Button>
                                     :
+                                    !isOwner &&
                                     <Button
                                         w={'full'}
                                         mt={8}
@@ -146,8 +146,6 @@ function UserCard({ image, fullName, followers, following, isFollowing, isOwner,
                                     >
                                         Follow
                                     </Button>
-
-
                             }
 
 
