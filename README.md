@@ -32,7 +32,7 @@ After running the Web API, you can make HTTP requests like:
  
 #### Sample HTTP GET requests:
 
-1. List all Products:
+1. List all Posts:
    ```sh
    https://localhost:8080/api/posts/getall
    ```
