@@ -5,7 +5,7 @@ Full-Stack Social App with Spring boot and React
 
 
 
-## Acknowledgements
+## Contents
 
  - [Tech Stack](#tech-stack)
  - [Usage](#usage)
